@@ -16,12 +16,15 @@ jobs:
           filename: "service-account.json"
           is-executable: true
           working-directory: "."
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
       - run: |
+          printf $GOOGLE_APPLICATION_CREDENTIALS >> service-account.json
           npm install -g firebase-tools
           yarn
           ls
           yarn build
-          export GOOGLE_APPLICATION_CREDENTIALS="$PWD/service-account.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="/service-account.json"
           firebase deploy --only hosting:$FIREBASE_TARGET_HOSTING
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
