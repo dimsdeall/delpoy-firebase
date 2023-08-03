@@ -17,6 +17,7 @@ jobs:
             echo 'after install'
             yarn
             echo 'after install Dependecies'
+            cd ..
             ls
             yarn build
             echo 'after build'
