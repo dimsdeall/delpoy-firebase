@@ -9,25 +9,26 @@ jobs:
     name: Build next js
     runs-on: ubuntu-latest
     steps:
-      - name: Install Dependecies
+      - name: Checkout
+        uses: actions/checkout@v3
         env:
-            GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: |
-            npm install -g firebase-tools
-            echo 'after install'
-            yarn
-            echo 'after install Dependecies'
-            cd ..
-            ls
-            yarn build
-            echo 'after build'
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      - run: |
+          npm install -g firebase-tools
+          echo 'after install'
+          yarn
+          echo 'after install Dependecies'
+          cd ..
+          ls
+          yarn build
+          echo 'after build'
   deploy:
     name: Deploy Firebase
     runs-on: ubuntu-latest
-    needs: [ build]
+    needs: [build]
     steps:
       - name: Deploy Firebase Hosting
         env:
-            FIREBASE_TARGET_HOSTING: ${{ secrets.FIREBASE_TARGET_HOSTING }}
+          FIREBASE_TARGET_HOSTING: ${{ secrets.FIREBASE_TARGET_HOSTING }}
         run: |
-            firebase deploy --only hosting:$FIREBASE_TARGET_HOSTING
+          firebase deploy --only hosting:$FIREBASE_TARGET_HOSTING
