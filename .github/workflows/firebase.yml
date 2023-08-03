@@ -8,17 +8,17 @@ jobs:
   build:
     name: Build next js
     runs-on: ubuntu-latest
-    strategy:
-        matrix:
-          node-version: [14.x, 16.x, 18.x]
     steps:
       - name: Install Dependecies
         env:
             GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
             npm install -g firebase-tools
+            echo 'after install'
             yarn
+            echo 'after install Dependecies'
             yarn build
+            echo 'after build'
   deploy:
     name: Deploy Firebase
     runs-on: ubuntu-latest
