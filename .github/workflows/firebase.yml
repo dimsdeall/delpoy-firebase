@@ -11,15 +11,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          base64-encoded-secret: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          filename: "service-account.json"
-          is-executable: true
-          working-directory: "."
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
       - run: |
-          printf $GOOGLE_APPLICATION_CREDENTIALS >> "service-account.json"
+          touch service-account.json && echo '$GOOGLE_APPLICATION_CREDENTIALS' > service-account.json
           npm install -g firebase-tools
           yarn
           ls
